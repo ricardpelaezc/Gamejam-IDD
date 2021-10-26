@@ -102,7 +102,6 @@ public class Player : MonoBehaviour
         }
         if (_roomID < _unlockedRooms || _unlockedRooms == Rooms.Count)
         {
-            Debug.Log("CanRight");
             if (_rotationAmount > AngleLimit(_roomID))
             {
                 _initialSkyboxColor = SkyboxColors[_roomID - 1];
@@ -120,7 +119,6 @@ public class Player : MonoBehaviour
         {
             if (_rotationAmount < AngleLimit(_roomID - 1))
             {
-                Debug.Log("CanLeft");
                 _initialSkyboxColor = SkyboxColors[_roomID - 1];
                 _roomID--;
                 if (_roomID < 0)
