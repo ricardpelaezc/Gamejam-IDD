@@ -1,15 +1,30 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PaintController : MonoBehaviour
 {
     private float maxDistance=200f;
-    private GameObject currentSelected;
 
+    public List<Paint> AllPieces;
     public LayerMask m_LayerMask;
+
     public void Update()
     {
         if (Input.GetMouseButtonDown(0))
-            PaintSelected();  
+            PaintSelected();
+
+        if (ComproveAllPiecesConnected())
+            print("Solucionado!!");
+    }
+
+    public bool ComproveAllPiecesConnected()
+    {
+        for (int i = 0; i < AllPieces.Count; i++)
+        {
+            if (AllPieces[i].AllUnionConnected == false)
+                return false;
+        }
+        return true;
     }
 
     public void PaintSelected()
@@ -17,12 +32,8 @@ public class PaintController : MonoBehaviour
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, maxDistance, m_LayerMask)) //deseleccionamos
-        {
-            //currentSelected = null;
+        if (Physics.Raycast(ray, out hit, maxDistance, m_LayerMask))
             hit.collider.GetComponent<Paint>().Selected = true;
-        }
+        
     }
-
-
 }
