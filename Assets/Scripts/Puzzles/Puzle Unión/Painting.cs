@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Paint : MonoBehaviour
+public class Painting : MonoBehaviour
 {
     public bool Selected=false;
     public bool AllUnionConnected; //if all trigges union objects of this gameobject are true. Then this piece is connected.
@@ -33,7 +33,6 @@ public class Paint : MonoBehaviour
     
     private bool ComproveAllConnections()
     {
-        print("a");
         for (int i = 0; i < triggersUnion.Count; i++)
         {
             if (triggersUnion[i].CorrectPaintBool != true)

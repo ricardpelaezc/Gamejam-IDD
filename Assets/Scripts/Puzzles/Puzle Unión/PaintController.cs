@@ -5,7 +5,7 @@ public class PaintController : MonoBehaviour
 {
     private float maxDistance=200f;
 
-    public List<Paint> AllPieces;
+    public List<Painting> AllPieces;
     public LayerMask m_LayerMask;
 
     public void Update()
@@ -33,7 +33,7 @@ public class PaintController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit, maxDistance, m_LayerMask))
-            hit.collider.GetComponent<Paint>().Selected = true;
+            hit.collider.GetComponent<Painting>().Selected = true;
         
     }
 }
