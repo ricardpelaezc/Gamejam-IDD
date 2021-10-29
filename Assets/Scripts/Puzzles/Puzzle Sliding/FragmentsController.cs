@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FragmentsController : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class FragmentsController : MonoBehaviour
     private Color emptyColor = new Color(0, 0, 0, 0);
     private Color activeColor = new Color(1, 1, 1, 1);
 
+    Camera m_Camera => Cameras.GetCameras().OrtographicCamera;
+    public PuzlePanel m_PuzzlePanel;
     private void Start()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -41,7 +44,7 @@ public class FragmentsController : MonoBehaviour
     private void Update()
     {
         RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -57,8 +60,22 @@ public class FragmentsController : MonoBehaviour
         }
 
         if (CheckCombination()) 
-        { 
-            
+        {
+            Cameras.GetCameras().Perspective();
+            m_PuzzlePanel.currentPuzzle++;
+
+            m_PuzzlePanel.ResetPanel();
+            gameObject.transform.parent.gameObject.SetActive(false);
+            Player.GetPlayer().UnlockRoom();
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Cameras.GetCameras().Perspective();
+            m_PuzzlePanel.currentPuzzle++;
+            m_PuzzlePanel.ResetPanel();
+            gameObject.transform.parent.gameObject.SetActive(false);
+            Player.GetPlayer().UnlockRoom();
         }
 
     }

@@ -9,6 +9,8 @@ public class Painting : MonoBehaviour
     private Vector3 mousePos;
     private float smoothTime = 0.05f;
 
+    Camera m_Camera => Cameras.GetCameras().OrtographicCamera;
+
     private void Start()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -45,9 +47,9 @@ public class Painting : MonoBehaviour
         //    Vector3 Pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //Pos.z = transform.position.z;
         //print(Pos);
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;
-        Vector2 newPos = new Vector3(mousePos.x, mousePos.y, 0);
+        Vector3 newPos = new Vector3(mousePos.x, mousePos.y, transform.position.z);
         transform.position = Vector3.Lerp(transform.position, newPos, smoothTime);//Vector3.MoveTowards(transform.position, Pos, smoothTime * Time.deltaTime);
     }
 }

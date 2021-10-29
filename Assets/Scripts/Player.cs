@@ -45,6 +45,14 @@ public class Player : MonoBehaviour
     [SerializeField] float _roomRotationalDeceleration = 5;
     [SerializeField] float _skyboxFadeTime = 1;
 
+    static Player _Player;
+
+    private void Awake()
+    {
+        _Player = this;
+    }
+
+    static public Player GetPlayer() => _Player;
     private void Start()
     {
         for (int i = 0; i < Rooms.Count; i++)

@@ -7,6 +7,6 @@ public class Passer : Animated
     private void Start()
     {
         _animationsNames = new List<string> { null };
-        _actionsAfterAnimations = new List<Action> { Puzle.ShowPanel };
+        _actionsAfterAnimations = new List<Action> { Puzle.MakePuzzle };
     }
 }
