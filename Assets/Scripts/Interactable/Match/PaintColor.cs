@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Paint: Animated
+public class PaintColor : Animated
 {
     public override void Match()
     {
