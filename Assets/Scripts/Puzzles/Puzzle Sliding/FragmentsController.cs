@@ -35,10 +35,6 @@ public class FragmentsController : MonoBehaviour
             AllPieces.Add(transform.GetChild(i).GetComponent<SpriteRenderer>());
             ResetList.Add(AllPieces[i].sprite);
         }
-            
-
-        
-
        ThirdRow[2].GetComponent<SpriteRenderer>().color = emptyColor;
     }
     private void Update()

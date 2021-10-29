@@ -4,6 +4,6 @@ public class Water : Animated
 {
     public override void Match()
     {
-        _animator.SetTrigger("match");
+        _animator.SetTrigger("Match");
     }
 }
