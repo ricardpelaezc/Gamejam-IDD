@@ -19,14 +19,28 @@ public class Player : MonoBehaviour
     Color _finalSkyboxColor;
     float _roomRotationalSpeed = 0;
     bool _dragging = true;
+    bool _draggingPickedItem;
+    Vector3 _pickedItemLeavePosition;
+    Quaternion _pickedItemLeaveRotation;
+    bool _returnPickedItem;
+    private float _leaveTimer;
+    bool _reset;
 
     public Camera Camera;
-    public KeyCode Drag = KeyCode.Mouse0;
-    public KeyCode Interact = KeyCode.Mouse1;
+    KeyCode Drag = KeyCode.Mouse0;
+    KeyCode Interact = KeyCode.Mouse0;
     public GameObject RoomContainer;
     public List<GameObject> Rooms;
     public Material SkyboxMaterial;
     public List<Color> SkyboxColors;
+    public Pickable PickedItem;
+    public GameObject PickedInstance;
+    public bool Picked;
+    public GameObject PickedItemTargetItem;
+    public Transform Inventory;
+    public LayerMask DragIgnoreLayers;
+    public float LeaveTime = 0;
+    public GameObject InventoryRemover;
     [SerializeField] float _roomRotationalAcceleration = 5;
     [SerializeField] float _roomRotationalDeceleration = 5;
     [SerializeField] float _skyboxFadeTime = 1;
@@ -44,22 +58,109 @@ public class Player : MonoBehaviour
     {
         if (!_lockControls)
         {
-            if (Input.GetKey(Drag))
+            if (_draggingPickedItem)
             {
-                _roomRotationalSpeed -= Input.GetAxis("Mouse X") * _roomRotationalAcceleration * Time.deltaTime;
-                _dragging = true;
-            }
-            if (Input.GetKeyDown(Interact))
-            {
-                RaycastHit hit;
-                Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
-
-                if (Physics.Raycast(ray, out hit))
+                if (Input.GetKey(Interact))
                 {
-                    if (hit.collider.tag == "Interactable")
+                    RaycastHit hit;
+                    Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
+
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, DragIgnoreLayers))
                     {
-                        Interactable interactable = hit.transform.GetComponent<Interactable>();
-                        interactable.Interact();
+                        Vector3 position = Camera.transform.InverseTransformPoint(hit.point);
+                        position = new Vector3(position.x / 2, position.y / 2, position.z / 2);
+                        position = Camera.transform.TransformPoint(position);
+
+                        PickedInstance.transform.position = position;
+
+                    }
+                }
+                else if (Input.GetKeyUp(Interact))
+                {
+                    RaycastHit hit;
+                    Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
+
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        if (hit.collider.tag == "Interactable")
+                        {
+                            if (hit.collider.transform.position == PickedItemTargetItem.transform.position)
+                            {
+                                hit.collider.GetComponent<Interactable>().Match();
+                                Destroy(PickedItem.gameObject);
+                                Destroy(PickedInstance);
+                                Picked = false;
+                                _draggingPickedItem = false;
+                                InventoryRemover.SetActive(false);
+                            }
+                            else
+                            {
+                                _draggingPickedItem = false;
+                                PickedInstance.SetActive(true);
+                                _lockControls = true;
+                                _returnPickedItem = true;
+                                _pickedItemLeavePosition = PickedInstance.transform.position;
+                                _pickedItemLeaveRotation = PickedInstance.transform.rotation;
+                                InventoryRemover.SetActive(false);
+                            }
+                        }
+                        else if (hit.collider.tag == "InventoryRemover")
+                        {
+                            RemoveInventory();
+                            InventoryRemover.SetActive(false);
+                        }
+                        else
+                        {
+                            _draggingPickedItem = false;
+                            PickedInstance.SetActive(true);
+                            _lockControls = true;
+                            _returnPickedItem = true;
+                            _pickedItemLeavePosition = PickedInstance.transform.position;
+                            _pickedItemLeaveRotation = PickedInstance.transform.rotation;
+                            InventoryRemover.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+                        _draggingPickedItem = false;
+                        PickedInstance.SetActive(true);
+                        _lockControls = true;
+                        _returnPickedItem = true;
+                        _pickedItemLeavePosition = PickedInstance.transform.position;
+                        _pickedItemLeaveRotation = PickedInstance.transform.rotation;
+                        InventoryRemover.SetActive(false);
+                    }
+                }
+            }
+            else
+            {
+                if (Input.GetKey(Drag))
+                {
+                    _roomRotationalSpeed -= Input.GetAxis("Mouse X") * _roomRotationalAcceleration * Time.deltaTime;
+                    _dragging = true;
+                }
+                else
+                {
+                    _dragging = false;
+                }
+                if (Input.GetKeyDown(Interact))
+                {
+                    RaycastHit hit;
+                    Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
+
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        if (hit.collider.tag == "Interactable")
+                        {
+                            Interactable interactable = hit.transform.GetComponent<Interactable>();
+                            interactable.Interact();
+                        }
+                        else if (hit.collider.tag == "Inventory" && Picked)
+                        {
+                            _draggingPickedItem = true;
+                            InventoryRemover.SetActive(true);
+                            //PickedInstance.SetActive(false);
+                        }
                     }
                 }
             }
@@ -70,7 +171,7 @@ public class Player : MonoBehaviour
                     float correction = AngleLimit(_unlockedRooms) - _rotationAmount;
                     RoomContainer.transform.Rotate(0.0f, correction, 0.0f);
                     _rotationAmount = AngleLimit(_unlockedRooms);
-                    _roomRotationalSpeed = -_roomRotationalSpeed/2;
+                    _roomRotationalSpeed = -_roomRotationalSpeed / 2;
                 }
                 else if (_rotationAmount <= AngleLimit(0))
                 {
@@ -81,9 +182,24 @@ public class Player : MonoBehaviour
                 }
             }
         }
+        if (_returnPickedItem)
+        {
+            Vector3 movement = Vector3.Lerp(_pickedItemLeavePosition, Inventory.transform.position, _leaveTimer / LeaveTime);
+            Quaternion rotationLerp = Quaternion.Lerp(_pickedItemLeaveRotation, Inventory.transform.rotation, _leaveTimer / LeaveTime);
+            PickedInstance.transform.position = movement;
+            PickedInstance.transform.rotation = rotationLerp; 
+            if (_leaveTimer > LeaveTime)
+            {
+                PickedInstance.transform.position = Inventory.transform.position;
+                _leaveTimer = 0;
+                _returnPickedItem = false;
+                _lockControls = false;
+            }
+            _leaveTimer += Time.deltaTime;
+        }
         if (_roomRotationalSpeed != 0)
         {
-            _roomRotationalSpeed += _roomRotationalDeceleration * Time.deltaTime * ((_roomRotationalSpeed < 0) ? 1 : -1) * ((_dragging) ? 0.25f : 1);
+            _roomRotationalSpeed += _roomRotationalDeceleration * Time.deltaTime * ((_roomRotationalSpeed < 0) ? 1 : -1) * ((_dragging) ? 0f : 1);
         }
         else if (Mathf.Abs(_roomRotationalSpeed) < 1)
         {
@@ -94,37 +210,44 @@ public class Player : MonoBehaviour
         _rotationAmount += rotation;
         if (_unlockedRooms == Rooms.Count)
         {
-            _rotationAmount = _rotationAmount % 360;
+            if (_rotationAmount > 360)
+            {
+                _rotationAmount = 0;
+                _reset = true;
+                _roomID = 1;
+                _initialSkyboxColor = SkyboxColors[Rooms.Count - 1];
+                _finalSkyboxColor = SkyboxColors[0];
+                _skyBoxFading = true;
+                _skyboxFadeTimer = 0;
+            }
             if (_rotationAmount < 0)
             {
                 _rotationAmount += 360;
+                _reset = true;
+                _roomID = Rooms.Count;
+                _initialSkyboxColor = SkyboxColors[0];
+                _finalSkyboxColor = SkyboxColors[Rooms.Count - 1];
+                _skyBoxFading = true;
+                _skyboxFadeTimer = 0;
             }
         }
-        if (_roomID < _unlockedRooms || _unlockedRooms == Rooms.Count)
+        if ((_roomID < _unlockedRooms || _unlockedRooms == Rooms.Count) && !_reset)
         {
             if (_rotationAmount > AngleLimit(_roomID))
             {
                 _initialSkyboxColor = SkyboxColors[_roomID - 1];
                 _roomID++;
-                if (_roomID > Rooms.Count)
-                {
-                    _roomID = 1;
-                }
                 _finalSkyboxColor = SkyboxColors[_roomID - 1];
                 _skyBoxFading = true;
                 _skyboxFadeTimer = 0;
             }
         }
-        if (_roomID > 1 || _unlockedRooms == Rooms.Count)
+        if ((_roomID >= 1 || _unlockedRooms == Rooms.Count) && !_reset)
         {
             if (_rotationAmount < AngleLimit(_roomID - 1))
             {
                 _initialSkyboxColor = SkyboxColors[_roomID - 1];
                 _roomID--;
-                if (_roomID < 0)
-                {
-                    _roomID = Rooms.Count;
-                }
                 _finalSkyboxColor = SkyboxColors[_roomID - 1];
                 _skyBoxFading = true;
                 _skyboxFadeTimer = 0;
@@ -138,6 +261,7 @@ public class Player : MonoBehaviour
             {
                 outputColor = _finalSkyboxColor;
                 _skyBoxFading = false;
+                _reset = false;
             }
             RenderSettings.skybox.SetColor("_Tint", outputColor);
         }
@@ -172,5 +296,10 @@ public class Player : MonoBehaviour
     private float AngleLimit(int id)
     {
         return 90 * id;
+    }
+    public void RemoveInventory()
+    {
+        PickedItem.ReturnPickedItem();
+        _draggingPickedItem = false;
     }
 }
