@@ -18,7 +18,8 @@ public class FragmentsController : MonoBehaviour
     public List<GameObject> ThirdRow;
 
     [Header("Pieces Controller")]
-    public List<SpriteRenderer> Solution;
+    public List<Sprite> Solution;
+    [SerializeField]private List<Sprite> ResetList = new List<Sprite>();
     [SerializeField]private List<SpriteRenderer> AllPieces = new List<SpriteRenderer>();
 
     private Color emptyColor = new Color(0, 0, 0, 0);
@@ -27,7 +28,15 @@ public class FragmentsController : MonoBehaviour
     private void Start()
     {
         for (int i = 0; i < transform.childCount; i++)
+        {
             AllPieces.Add(transform.GetChild(i).GetComponent<SpriteRenderer>());
+            ResetList.Add(AllPieces[i].sprite);
+        }
+            
+
+        
+
+       ThirdRow[2].GetComponent<SpriteRenderer>().color = emptyColor;
     }
     private void Update()
     {
@@ -47,14 +56,17 @@ public class FragmentsController : MonoBehaviour
             }
         }
 
-        if (CheckCombination())
-            print("Combinacion correcta");
+        if (CheckCombination()) 
+        { 
+            
+        }
+
     }
     private bool CheckCombination()
     {
         for (int i = 0; i < AllPieces.Count; i++)
         {
-            if (AllPieces[i].sprite != Solution[i].sprite)
+            if (AllPieces[i].sprite != Solution[i])
                 return false;
         }
         return true;
@@ -67,6 +79,7 @@ public class FragmentsController : MonoBehaviour
             case "First":
                 if(index == 0)
                 {
+
                     if(FirstRow[index+1].GetComponent<SpriteRenderer>().color == emptyColor) //esquina izquierda
                     {
                         FirstRow[index + 1].GetComponent<SpriteRenderer>().color = activeColor;
@@ -194,7 +207,7 @@ public class FragmentsController : MonoBehaviour
                         SecondRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
                         SecondRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
                     }
-                }else
+                }else if (index == 2)
                 {
                     if (FirstRow[index].GetComponent<SpriteRenderer>().color == emptyColor) //arriba
                     {
@@ -269,8 +282,9 @@ public class FragmentsController : MonoBehaviour
                         ThirdRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
                     }
                 }
-                else
+                else if (index == 2)
                 {
+                    
                     if (SecondRow[index].GetComponent<SpriteRenderer>().color == emptyColor) //arriba
                     {
                         SecondRow[index].GetComponent<SpriteRenderer>().color = activeColor;
@@ -326,5 +340,15 @@ public class FragmentsController : MonoBehaviour
                 currentNameRow = "Third";
             } 
         }
+    }
+
+    public void ResetPuzzle()
+    {
+        for (int i = 0; i < AllPieces.Count; i++)
+        {
+            AllPieces[i].sprite = ResetList[i];
+            AllPieces[i].color = activeColor;
+        }
+        ThirdRow[2].GetComponent<SpriteRenderer>().color = emptyColor;
     }
 }

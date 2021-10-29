@@ -4,7 +4,7 @@ using UnityEngine;
 public class Paint : MonoBehaviour
 {
     public bool Selected=false;
-    public bool AllConected; //if all trigges union objects of this gameobject are true. Then this piece is connected.
+    public bool AllUnionConnected; //if all trigges union objects of this gameobject are true. Then this piece is connected.
     [SerializeField] private List<UnionPaintTrigger> triggersUnion = new List<UnionPaintTrigger>();
     private Vector3 mousePos;
     private float smoothTime = 0.05f;
@@ -24,11 +24,16 @@ public class Paint : MonoBehaviour
             Selected = false;
 
         if (ComproveAllConnections())
-            print("Esta pieza está bien unida.");
+        {
+            print(gameObject.name + "Esta pieza está bien unida.");
+            AllUnionConnected = true;
+        }
+           
     }
     
     private bool ComproveAllConnections()
     {
+        print("a");
         for (int i = 0; i < triggersUnion.Count; i++)
         {
             if (triggersUnion[i].CorrectPaintBool != true)

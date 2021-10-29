@@ -8,19 +8,42 @@ public class UnionPaintTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("hola");
-
-        print(other.name);
         if (other.gameObject.GetComponentInParent<SpriteRenderer>().sprite == CorrectPaint.sprite)
-        {
-            print("aaaaaaaa");
             CorrectPaintBool = true;
-        }
+        else if (other.gameObject.GetComponent<SpriteRenderer>() != null)
+            if(other.gameObject.GetComponent<SpriteRenderer>().sprite== CorrectPaint.sprite)
+                CorrectPaintBool = true;
+            else
+            CorrectPaintBool = false;
+            
     }
 
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.GetComponentInParent<SpriteRenderer>().sprite == CorrectPaint.sprite)
+            CorrectPaintBool = true;
+        else if (other.gameObject.GetComponent<SpriteRenderer>() != null)
+            if (other.gameObject.GetComponent<SpriteRenderer>().sprite == CorrectPaint.sprite)
+                CorrectPaintBool = true;
+            else
+                CorrectPaintBool = false;
+
+    }
     private void OnTriggerExit(Collider other)
     {
-        CorrectPaintBool = false;
+        
+            CorrectPaintBool = false;
     }
+
+    //private void ComproveEnter(Collider other)
+    //{
+    //    if (other.gameObject.GetComponentInParent<SpriteRenderer>().sprite == CorrectPaint.sprite)
+    //    {
+    //        CorrectPaintBool = true;
+    //    }
+    //    else
+    //        CorrectPaintBool = false;
+    //}
 
 }
