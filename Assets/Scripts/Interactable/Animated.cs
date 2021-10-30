@@ -22,12 +22,15 @@ public class Animated : Interactable
     {
         if (_animatorClipInfos.Length > 0 && !_startedAnimation)
         {
+            print("1");
             StartCoroutine(WaitAnimationTime(_animatorClipInfos[0].clip.length));
             _startedAnimation = true;
         }
         if (_interactCount == _animationsNames.Count && _animationFinished)
         {
-            _actionsAfterAnimations[_interactCount - 1]?.Invoke();
+            if (_interactCount <= _actionsAfterAnimations.Count && _interactCount > 0)
+                _actionsAfterAnimations[_interactCount - 1]?.Invoke();
+
             _animationFinished = false;
         }
     }
