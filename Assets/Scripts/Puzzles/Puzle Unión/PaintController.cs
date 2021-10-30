@@ -19,7 +19,7 @@ public class PaintController : MonoBehaviour
 
         if (ComproveAllPiecesConnected())
         {
-            Cameras.GetCameras().Ortographics();
+            //Cameras.GetCameras().Ortographics();
             Player.GetPlayer().UnlockRoom();
 
             m_PuzzlePanel.ResetPanel();

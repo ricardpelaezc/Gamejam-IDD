@@ -25,10 +25,17 @@ public class PuzlePanel : MonoBehaviour
     //}
     public GameObject PuzzleSlide;
     public GameObject PuzzlePaint;
-
+    private Animator puzzleSlideAnim;
+    private Animator puzzlePaintAnim;
     //public GameObject PuzzlePasser;
 
-
+    public Animator inv;
+    public Player p;
+    private void Start()
+    {
+        puzzleSlideAnim = PuzzleSlide.GetComponent<Animator>();
+        puzzlePaintAnim = PuzzlePaint.GetComponent<Animator>();
+    }
     public void ResetPanel()
     {
         PuzzleSlide.gameObject.SetActive(false);
@@ -37,12 +44,13 @@ public class PuzlePanel : MonoBehaviour
     }
     public void MakePuzzle()
     {
-        Cameras.GetCameras().Ortographics();
-
+        inv.SetBool("Show", false);
+        p.RemoveInventory();
         if (currentPuzzle == 0)
         {
             PuzzleSlide.gameObject.SetActive(true);
             Button.gameObject.SetActive(true);
+            puzzleSlideAnim.SetBool("Show", true);
         }
             
 

@@ -47,6 +47,8 @@ public class Player : MonoBehaviour
 
     static Player _Player;
 
+    [SerializeField] private Animator hudAnim;
+
     private void Awake()
     {
         _Player = this;
@@ -68,6 +70,7 @@ public class Player : MonoBehaviour
         {
             if (_draggingPickedItem)
             {
+
                 if (Input.GetKey(Interact))
                 {
                     RaycastHit hit;
@@ -75,16 +78,17 @@ public class Player : MonoBehaviour
 
                     if (Physics.Raycast(ray, out hit, Mathf.Infinity, DragIgnoreLayers))
                     {
+                        hudAnim.SetBool("SemiHide", true);
                         Vector3 position = Camera.transform.InverseTransformPoint(hit.point);
                         position = new Vector3(position.x / 2, position.y / 2, position.z / 2);
                         position = Camera.transform.TransformPoint(position);
 
                         PickedInstance.transform.position = position;
-
                     }
                 }
                 else if (Input.GetKeyUp(Interact))
                 {
+                    hudAnim.SetBool("SemiHide", false);
                     RaycastHit hit;
                     Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
 
@@ -92,6 +96,7 @@ public class Player : MonoBehaviour
                     {
                         if (hit.collider.tag == "Interactable")
                         {
+
                             if (hit.collider.transform.position == PickedItemTargetItem.transform.position)
                             {
                                 hit.collider.GetComponent<Interactable>().Match();
@@ -116,6 +121,7 @@ public class Player : MonoBehaviour
                         {
                             RemoveInventory();
                             InventoryRemover.SetActive(false);
+                            hudAnim.SetBool("Show", false);
                         }
                         else
                         {
@@ -137,6 +143,7 @@ public class Player : MonoBehaviour
                         _pickedItemLeavePosition = PickedInstance.transform.position;
                         _pickedItemLeaveRotation = PickedInstance.transform.rotation;
                         InventoryRemover.SetActive(false);
+                        hudAnim.SetBool("Show", false);
                     }
                 }
             }
@@ -158,10 +165,18 @@ public class Player : MonoBehaviour
 
                     if (Physics.Raycast(ray, out hit))
                     {
-                        if (hit.collider.tag == "Interactable")
+                        if (hit.collider.tag == "Interactable" || hit.collider.tag == "InteractableObj")
                         {
                             Interactable interactable = hit.transform.GetComponent<Interactable>();
                             interactable.Interact();
+
+                            if (hit.collider.tag != "InteractableObj" && !hit.collider.GetComponent<Water>())
+                            {
+                                hudAnim.SetBool("Show", true);
+                            }
+
+
+                            print("pickedup");
                         }
                         else if (hit.collider.tag == "Inventory" && Picked)
                         {
@@ -208,6 +223,11 @@ public class Player : MonoBehaviour
         if (_roomRotationalSpeed != 0)
         {
             _roomRotationalSpeed += _roomRotationalDeceleration * Time.deltaTime * ((_roomRotationalSpeed < 0) ? 1 : -1) * ((_dragging) ? 0f : 1);
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                _roomRotationalSpeed = 0;
+            }
         }
         else if (Mathf.Abs(_roomRotationalSpeed) < 1)
         {
@@ -227,6 +247,7 @@ public class Player : MonoBehaviour
                 _finalSkyboxColor = SkyboxColors[0];
                 _skyBoxFading = true;
                 _skyboxFadeTimer = 0;
+
             }
             if (_rotationAmount < 0)
             {
@@ -237,28 +258,33 @@ public class Player : MonoBehaviour
                 _finalSkyboxColor = SkyboxColors[Rooms.Count - 1];
                 _skyBoxFading = true;
                 _skyboxFadeTimer = 0;
+
             }
         }
         if ((_roomID < _unlockedRooms || _unlockedRooms == Rooms.Count) && !_reset)
         {
             if (_rotationAmount > AngleLimit(_roomID))
             {
+                print(_roomID);
                 _initialSkyboxColor = SkyboxColors[_roomID - 1];
                 _roomID++;
                 _finalSkyboxColor = SkyboxColors[_roomID - 1];
                 _skyBoxFading = true;
                 _skyboxFadeTimer = 0;
+
             }
         }
-        if ((_roomID >= 1 || _unlockedRooms == Rooms.Count) && !_reset)
+        if ((_roomID > 1 || _unlockedRooms == Rooms.Count) && !_reset)
         {
             if (_rotationAmount < AngleLimit(_roomID - 1))
             {
                 _initialSkyboxColor = SkyboxColors[_roomID - 1];
                 _roomID--;
+                print(_roomID);
                 _finalSkyboxColor = SkyboxColors[_roomID - 1];
                 _skyBoxFading = true;
                 _skyboxFadeTimer = 0;
+
             }
         }
         if (_skyBoxFading)
@@ -285,6 +311,7 @@ public class Player : MonoBehaviour
 
                 Rooms[_unlockedRooms - 1].SetActive(true);
                 _appearing = true;
+
             }
             RoomContainer.transform.rotation = Quaternion.Euler(0.0f, animationRotation, 0.0f);
         }
@@ -307,7 +334,9 @@ public class Player : MonoBehaviour
     }
     public void RemoveInventory()
     {
-        PickedItem.ReturnPickedItem();
+        if (PickedItem)
+            PickedItem.ReturnPickedItem();
+
         _draggingPickedItem = false;
     }
 }

@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Cameras : MonoBehaviour
 {
-    public Camera PerspectiveCamera;
+    public Animator Camera;
     public Camera OrtographicCamera;
-
 
     static Cameras m_Cameras;
 
@@ -19,13 +18,11 @@ public class Cameras : MonoBehaviour
     static public Cameras GetCameras() => m_Cameras;
     public void Perspective()
     {
-        PerspectiveCamera.gameObject.SetActive(true);
-        OrtographicCamera.gameObject.SetActive(false);
+
     }
 
     public void Ortographics()
     {
-        PerspectiveCamera.gameObject.SetActive(false);
-        OrtographicCamera.gameObject.SetActive(true);
+
     }
 }
