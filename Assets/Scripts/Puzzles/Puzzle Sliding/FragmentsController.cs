@@ -92,6 +92,7 @@ public class FragmentsController : MonoBehaviour
         m_PuzzlePanel.currentPuzzle++;
 
         m_PuzzlePanel.ResetPanel();
+        IAState.GetIA().SetDoor();
         gameObject.transform.parent.gameObject.SetActive(false);
         Player.GetPlayer().UnlockRoom();
     }

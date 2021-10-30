@@ -5,32 +5,24 @@ public class PuzlePanel : MonoBehaviour
 {
     public int currentPuzzle = 0;
     public Button Button;
-  //  public GameObject SelectedItem;
-    //CanvasGroup _canvasGroup;
-    //private void Awake()
-    //{
-    //    _canvasGroup = GetComponent<CanvasGroup>();
-    //}
-    //public void ShowPanel()
-    //{
-    //    _canvasGroup.alpha = 1;
-    //    _canvasGroup.interactable = true;
-    //    _canvasGroup.blocksRaycasts = true;
-    //}
-    //public void HidePanel()
-    //{
-    //    _canvasGroup.alpha = 0;
-    //    _canvasGroup.interactable = false;
-    //    _canvasGroup.blocksRaycasts = false;
-    //}
     public GameObject PuzzleSlide;
     public GameObject PuzzlePaint;
+
     private Animator puzzleSlideAnim;
     private Animator puzzlePaintAnim;
-    //public GameObject PuzzlePasser;
+
+
 
     public Animator inv;
-    public Player p;
+    // public Player p;
+
+    static PuzlePanel PuzzlePanel;
+    private void Awake()
+    {
+        PuzzlePanel = this;
+    }
+
+    static public PuzlePanel GetPuzzlePanel() => PuzzlePanel;
     private void Start()
     {
         puzzleSlideAnim = PuzzleSlide.GetComponent<Animator>();
@@ -45,7 +37,7 @@ public class PuzlePanel : MonoBehaviour
     public void MakePuzzle()
     {
         inv.SetBool("Show", false);
-        p.RemoveInventory();
+        Player.GetPlayer().RemoveInventory();
         if (currentPuzzle == 0)
         {
             PuzzleSlide.gameObject.SetActive(true);

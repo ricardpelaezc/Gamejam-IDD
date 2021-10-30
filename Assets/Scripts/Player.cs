@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,6 +56,10 @@ public class Player : MonoBehaviour
     }
 
     static public Player GetPlayer() => _Player;
+    internal int GetRoomID()
+    {
+        return _unlockedRooms;
+    }
     private void Start()
     {
         for (int i = 0; i < Rooms.Count; i++)
@@ -320,6 +325,7 @@ public class Player : MonoBehaviour
             _lockControls = false;
         }
     }
+
     public void UnlockRoom()
     {
         _lockControls = true;

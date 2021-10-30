@@ -27,7 +27,6 @@ public class Painting : MonoBehaviour
 
         if (ComproveAllConnections())
         {
-            print(gameObject.name + "Esta pieza está bien unida.");
             AllUnionConnected = true;
         }
            
@@ -44,12 +43,9 @@ public class Painting : MonoBehaviour
     }
     private void FollowMouse()
     {
-        //    Vector3 Pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Pos.z = transform.position.z;
-        //print(Pos);
         mousePos = m_Camera.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;
         Vector3 newPos = new Vector3(mousePos.x, mousePos.y, transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, newPos, smoothTime);//Vector3.MoveTowards(transform.position, Pos, smoothTime * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, newPos, smoothTime);
     }
 }
