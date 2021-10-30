@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,8 +32,10 @@ public class FragmentsController : MonoBehaviour
 
     private bool helping = false;
     public Sprite helpSprite;
+    Animator a;
     private void Start()
     {
+        a = GetComponentInParent<Animator>();
         for (int i = 0; i < transform.childCount; i++)
         {
             AllPieces.Add(transform.GetChild(i).GetComponent<SpriteRenderer>());
@@ -69,22 +72,28 @@ public class FragmentsController : MonoBehaviour
         if (CheckCombination()) 
         {
             Cameras.GetCameras().Perspective();
-            m_PuzzlePanel.currentPuzzle++;
-
-            m_PuzzlePanel.ResetPanel();
-            gameObject.transform.parent.gameObject.SetActive(false);
-            Player.GetPlayer().UnlockRoom();
+            StartCoroutine(NextLevel());
         }
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Cameras.GetCameras().Perspective();
-            m_PuzzlePanel.currentPuzzle++;
-            m_PuzzlePanel.ResetPanel();
-            gameObject.transform.parent.gameObject.SetActive(false);
-            Player.GetPlayer().UnlockRoom();
-        }
+        //if (Input.GetKeyDown(KeyCode.K))
+        //{
+        //    Cameras.GetCameras().Perspective();
+        //    m_PuzzlePanel.currentPuzzle++;
+        //    m_PuzzlePanel.ResetPanel();
+        //    gameObject.transform.parent.gameObject.SetActive(false);
+        //    Player.GetPlayer().UnlockRoom();
+        //}
 
+    }
+    private IEnumerator NextLevel()
+    {
+        a.SetBool("Show", false);
+        yield return new WaitForSeconds(4f);
+        m_PuzzlePanel.currentPuzzle++;
+
+        m_PuzzlePanel.ResetPanel();
+        gameObject.transform.parent.gameObject.SetActive(false);
+        Player.GetPlayer().UnlockRoom();
     }
     private bool CheckCombination()
     {

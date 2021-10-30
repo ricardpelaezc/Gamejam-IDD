@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
                             Interactable interactable = hit.transform.GetComponent<Interactable>();
                             interactable.Interact();
 
-                            if (hit.collider.tag != "InteractableObj")
+                            if (hit.collider.tag != "InteractableObj" && !hit.collider.GetComponent<Water>())
                             {
                                 hudAnim.SetBool("Show", true);
                             }
@@ -334,7 +334,9 @@ public class Player : MonoBehaviour
     }
     public void RemoveInventory()
     {
-        PickedItem.ReturnPickedItem();
+        if (PickedItem)
+            PickedItem.ReturnPickedItem();
+
         _draggingPickedItem = false;
     }
 }

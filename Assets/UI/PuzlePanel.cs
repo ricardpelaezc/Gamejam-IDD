@@ -29,6 +29,8 @@ public class PuzlePanel : MonoBehaviour
     private Animator puzzlePaintAnim;
     //public GameObject PuzzlePasser;
 
+    public Animator inv;
+    public Player p;
     private void Start()
     {
         puzzleSlideAnim = PuzzleSlide.GetComponent<Animator>();
@@ -42,7 +44,8 @@ public class PuzlePanel : MonoBehaviour
     }
     public void MakePuzzle()
     {
-
+        inv.SetBool("Show", false);
+        p.RemoveInventory();
         if (currentPuzzle == 0)
         {
             PuzzleSlide.gameObject.SetActive(true);
