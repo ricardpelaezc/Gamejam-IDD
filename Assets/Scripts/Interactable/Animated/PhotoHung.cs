@@ -9,8 +9,8 @@ public class PhotoHung : Animated
 
     private void Start()
     {
-        _animationsNames = new List<string> {"Hit", "Hit", "Hit"};
-        _actionsAfterAnimations = new List<Action> { null, () => _animator.SetTrigger("Fall"), Puzle.MakePuzzle};
+        _animationsNames = new List<string> {"Hit"};
+        _actionsAfterAnimations = new List<Action> { Puzle.MakePuzzle};
     }
 }
 
