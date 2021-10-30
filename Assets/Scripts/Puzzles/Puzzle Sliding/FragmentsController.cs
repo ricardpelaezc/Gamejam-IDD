@@ -14,9 +14,9 @@ public class FragmentsController : MonoBehaviour
     public LayerMask m_LayerMask;
 
     [Header("Currents Rows")]
-    public List<GameObject> FirstRow;
-    public List<GameObject> SecondRow;
-    public List<GameObject> ThirdRow;
+    public List<SpriteRenderer> FirstRow;
+    public List<SpriteRenderer> SecondRow;
+    public List<SpriteRenderer> ThirdRow;
 
     [Header("Pieces Controller")]
     public List<Sprite> Solution;
@@ -28,6 +28,9 @@ public class FragmentsController : MonoBehaviour
 
     Camera m_Camera => Cameras.GetCameras().OrtographicCamera;
     public PuzlePanel m_PuzzlePanel;
+
+    private bool helping = false;
+    public Sprite helpSprite;
     private void Start()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -48,9 +51,17 @@ public class FragmentsController : MonoBehaviour
             {
                 if(hit.collider.GetComponent<SpriteRenderer>().color != emptyColor)
                 {
-                    FindRowAndIndex(hit.collider.gameObject);
+                    FindRowAndIndex(hit.collider.gameObject.GetComponent<SpriteRenderer>());
                     currentSprite = hit.collider.GetComponent<SpriteRenderer>().sprite;
-                    MovePiece(currentNameRow);
+
+                    if (!helping)
+                        MovePiece(currentNameRow);
+                    else
+                    {
+                        print("Doing help");
+                        if (hit.collider != blank.gameObject)
+                            Help(currentNameRow);
+                    }
                 }
             }
         }
@@ -93,67 +104,67 @@ public class FragmentsController : MonoBehaviour
                 if(index == 0)
                 {
 
-                    if(FirstRow[index+1].GetComponent<SpriteRenderer>().color == emptyColor) //esquina izquierda
+                    if(FirstRow[index+1].color == emptyColor) //esquina izquierda
                     {
-                        FirstRow[index + 1].GetComponent<SpriteRenderer>().color = activeColor;
-                        FirstRow[index + 1].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        FirstRow[index + 1].color = activeColor;
+                        FirstRow[index + 1].sprite = currentSprite;
 
-                        FirstRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
+                        FirstRow[index].color = emptyColor;
 
-                        FirstRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        FirstRow[index].sprite = EmptySprite;
                     }
-                    if (SecondRow[index].GetComponent<SpriteRenderer>().color == emptyColor) //abajo
+                    if (SecondRow[index].color == emptyColor) //abajo
                     {
-                        SecondRow[index].GetComponent<SpriteRenderer>().color = activeColor;
-                        SecondRow[index].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        SecondRow[index].color = activeColor;
+                        SecondRow[index].sprite = currentSprite;
 
-                        FirstRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        FirstRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        FirstRow[index].color = emptyColor;
+                        FirstRow[index].sprite = EmptySprite;
                     }
                 }else if(index == 1)//en medio
                 {
-                    if (FirstRow[index + 1].GetComponent<SpriteRenderer>().color == emptyColor) //derecha
+                    if (FirstRow[index + 1].color == emptyColor) //derecha
                     {
-                        FirstRow[index + 1].GetComponent<SpriteRenderer>().color = activeColor;
-                        FirstRow[index + 1].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        FirstRow[index + 1].color = activeColor;
+                        FirstRow[index + 1].sprite = currentSprite;
 
-                        FirstRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        FirstRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        FirstRow[index].color = emptyColor;
+                        FirstRow[index].sprite = EmptySprite;
                     }
-                    else if (FirstRow[index - 1].GetComponent<SpriteRenderer>().color == emptyColor) //izquierda
+                    else if (FirstRow[index - 1].color == emptyColor) //izquierda
                     {
-                        FirstRow[index - 1].GetComponent<SpriteRenderer>().color = activeColor;
-                        FirstRow[index - 1].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        FirstRow[index - 1].color = activeColor;
+                        FirstRow[index - 1].sprite = currentSprite;
 
-                        FirstRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        FirstRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        FirstRow[index].color = emptyColor;
+                        FirstRow[index].sprite = EmptySprite;
                     }
-                    else if (SecondRow[index].GetComponent<SpriteRenderer>().color == emptyColor) //abajo
+                    else if (SecondRow[index].color == emptyColor) //abajo
                     {
-                        SecondRow[index].GetComponent<SpriteRenderer>().color = activeColor;
-                        SecondRow[index].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        SecondRow[index].color = activeColor;
+                        SecondRow[index].sprite = currentSprite;
 
-                        FirstRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        FirstRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        FirstRow[index].color = emptyColor;
+                        FirstRow[index].sprite = EmptySprite;
                     }
                 }
                 else
                 {
-                    if (FirstRow[index - 1].GetComponent<SpriteRenderer>().color == emptyColor) //izquierda
+                    if (FirstRow[index - 1].color == emptyColor) //izquierda
                     {
-                        FirstRow[index - 1].GetComponent<SpriteRenderer>().color = activeColor;
-                        FirstRow[index - 1].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        FirstRow[index - 1].color = activeColor;
+                        FirstRow[index - 1].sprite = currentSprite;
 
-                        FirstRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        FirstRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        FirstRow[index].color = emptyColor;
+                        FirstRow[index].sprite = EmptySprite;
                     }
-                    else if (SecondRow[index].GetComponent<SpriteRenderer>().color == emptyColor) //abajo
+                    else if (SecondRow[index].color == emptyColor) //abajo
                     {
-                        SecondRow[index].GetComponent<SpriteRenderer>().color = activeColor;
-                        SecondRow[index].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        SecondRow[index].color = activeColor;
+                        SecondRow[index].sprite = currentSprite;
 
-                        FirstRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        FirstRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        FirstRow[index].color = emptyColor;
+                        FirstRow[index].sprite = EmptySprite;
                     }
                 }
 
@@ -161,158 +172,158 @@ public class FragmentsController : MonoBehaviour
             case "Second":
                 if(index == 0)
                 {
-                    if (FirstRow[index].GetComponent<SpriteRenderer>().color == emptyColor) //arriba
+                    if (FirstRow[index].color == emptyColor) //arriba
                     {
-                        FirstRow[index].GetComponent<SpriteRenderer>().color = activeColor;
-                        FirstRow[index].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        FirstRow[index].color = activeColor;
+                        FirstRow[index].sprite = currentSprite;
 
-                        SecondRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        SecondRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        SecondRow[index].color = emptyColor;
+                        SecondRow[index].sprite = EmptySprite;
                     }
-                    else if (SecondRow[index + 1].GetComponent<SpriteRenderer>().color == emptyColor) //derecha
+                    else if (SecondRow[index + 1].color == emptyColor) //derecha
                     {
-                        SecondRow[index + 1].GetComponent<SpriteRenderer>().color = activeColor;
-                        SecondRow[index + 1].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        SecondRow[index + 1].color = activeColor;
+                        SecondRow[index + 1].sprite = currentSprite;
 
-                        SecondRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        SecondRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        SecondRow[index].color = emptyColor;
+                        SecondRow[index].sprite = EmptySprite;
                     }
-                    else if(ThirdRow[index].GetComponent<SpriteRenderer>().color == emptyColor)
+                    else if(ThirdRow[index].color == emptyColor)
                     {
-                        ThirdRow[index].GetComponent<SpriteRenderer>().color = activeColor;
-                        ThirdRow[index].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        ThirdRow[index].color = activeColor;
+                        ThirdRow[index].sprite = currentSprite;
 
-                        SecondRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        SecondRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        SecondRow[index].color = emptyColor;
+                        SecondRow[index].sprite = EmptySprite;
                     }
                 }
                 else if(index == 1)
                 {
-                    if (FirstRow[index].GetComponent<SpriteRenderer>().color == emptyColor) //arriba
+                    if (FirstRow[index].color == emptyColor) //arriba
                     {
-                        FirstRow[index].GetComponent<SpriteRenderer>().color = activeColor;
-                        FirstRow[index].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        FirstRow[index].color = activeColor;
+                        FirstRow[index].sprite = currentSprite;
 
-                        SecondRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        SecondRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        SecondRow[index].color = emptyColor;
+                        SecondRow[index].sprite = EmptySprite;
                     }
-                    else if (SecondRow[index + 1].GetComponent<SpriteRenderer>().color == emptyColor) //derecha
+                    else if (SecondRow[index + 1].color == emptyColor) //derecha
                     {
-                        SecondRow[index + 1].GetComponent<SpriteRenderer>().color = activeColor;
-                        SecondRow[index + 1].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        SecondRow[index + 1].color = activeColor;
+                        SecondRow[index + 1].sprite = currentSprite;
 
-                        SecondRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        SecondRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        SecondRow[index].color = emptyColor;
+                        SecondRow[index].sprite = EmptySprite;
                     }
-                    else if (SecondRow[index - 1].GetComponent<SpriteRenderer>().color == emptyColor) //Izquierda
+                    else if (SecondRow[index - 1].color == emptyColor) //Izquierda
                     {
-                        SecondRow[index - 1].GetComponent<SpriteRenderer>().color = activeColor;
-                        SecondRow[index - 1].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        SecondRow[index - 1].color = activeColor;
+                        SecondRow[index - 1].sprite = currentSprite;
 
-                        SecondRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        SecondRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        SecondRow[index].color = emptyColor;
+                        SecondRow[index].sprite = EmptySprite;
                     }
-                    else if (ThirdRow[index].GetComponent<SpriteRenderer>().color == emptyColor)
+                    else if (ThirdRow[index].color == emptyColor)
                     {
-                        ThirdRow[index].GetComponent<SpriteRenderer>().color = activeColor;
-                        ThirdRow[index].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        ThirdRow[index].color = activeColor;
+                        ThirdRow[index].sprite = currentSprite;
 
-                        SecondRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        SecondRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        SecondRow[index].color = emptyColor;
+                        SecondRow[index].sprite = EmptySprite;
                     }
                 }else if (index == 2)
                 {
-                    if (FirstRow[index].GetComponent<SpriteRenderer>().color == emptyColor) //arriba
+                    if (FirstRow[index].color == emptyColor) //arriba
                     {
-                        FirstRow[index].GetComponent<SpriteRenderer>().color = activeColor;
+                        FirstRow[index].color = activeColor;
                         FirstRow[index].GetComponent<SpriteRenderer>().sprite = currentSprite;
 
-                        SecondRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        SecondRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        SecondRow[index].color = emptyColor;
+                        SecondRow[index].sprite = EmptySprite;
                     }
                     else if (SecondRow[index - 1].GetComponent<SpriteRenderer>().color == emptyColor) //Izquierda
                     {
-                        SecondRow[index - 1].GetComponent<SpriteRenderer>().color = activeColor;
-                        SecondRow[index - 1].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        SecondRow[index - 1].color = activeColor;
+                        SecondRow[index - 1].sprite = currentSprite;
 
-                        SecondRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        SecondRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        SecondRow[index].color = emptyColor;
+                        SecondRow[index].sprite = EmptySprite;
                     }
-                    else if(ThirdRow[index].GetComponent<SpriteRenderer>().color == emptyColor)
+                    else if(ThirdRow[index].color == emptyColor)
                     {
-                        ThirdRow[index].GetComponent<SpriteRenderer>().color = activeColor;
-                        ThirdRow[index].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        ThirdRow[index].color = activeColor;
+                        ThirdRow[index].sprite = currentSprite;
 
-                        SecondRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        SecondRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        SecondRow[index].color = emptyColor;
+                        SecondRow[index].sprite = EmptySprite;
                     }
                 }
                 break;
             case "Third":
                 if(index == 0)
                 {
-                    if (SecondRow[index].GetComponent<SpriteRenderer>().color == emptyColor) //arriba
+                    if (SecondRow[index].color == emptyColor) //arriba
                     {
-                        SecondRow[index].GetComponent<SpriteRenderer>().color = activeColor;
-                        SecondRow[index].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        SecondRow[index].color = activeColor;
+                        SecondRow[index].sprite = currentSprite;
 
-                        ThirdRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        ThirdRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        ThirdRow[index].color = emptyColor;
+                        ThirdRow[index].sprite = EmptySprite;
                     }
-                    else if(ThirdRow[index+1].GetComponent<SpriteRenderer>().color == emptyColor) //derecha
+                    else if(ThirdRow[index+1].color == emptyColor) //derecha
                     {
-                        ThirdRow[index+1].GetComponent<SpriteRenderer>().color = activeColor;
-                        ThirdRow[index+1].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        ThirdRow[index+1].color = activeColor;
+                        ThirdRow[index+1].sprite = currentSprite;
 
-                        ThirdRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        ThirdRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        ThirdRow[index].color = emptyColor;
+                        ThirdRow[index].sprite = EmptySprite;
                     }
 
                 }else if (index == 1)
                 {
-                    if (SecondRow[index].GetComponent<SpriteRenderer>().color == emptyColor) //arriba
+                    if (SecondRow[index].color == emptyColor) //arriba
                     {
-                        SecondRow[index].GetComponent<SpriteRenderer>().color = activeColor;
-                        SecondRow[index].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        SecondRow[index].color = activeColor;
+                        SecondRow[index].sprite = currentSprite;
 
-                        ThirdRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        ThirdRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        ThirdRow[index].color = emptyColor;
+                        ThirdRow[index].sprite = EmptySprite;
                     }
-                    else if (ThirdRow[index + 1].GetComponent<SpriteRenderer>().color == emptyColor)//derecha
+                    else if (ThirdRow[index + 1].color == emptyColor)//derecha
                     {
-                        ThirdRow[index + 1].GetComponent<SpriteRenderer>().color = activeColor;
-                        ThirdRow[index + 1].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        ThirdRow[index + 1].color = activeColor;
+                        ThirdRow[index + 1].sprite = currentSprite;
 
-                        ThirdRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        ThirdRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        ThirdRow[index].color = emptyColor;
+                        ThirdRow[index].sprite = EmptySprite;
                     }
-                    else if (ThirdRow[index - 1].GetComponent<SpriteRenderer>().color == emptyColor)//izquierda
+                    else if (ThirdRow[index - 1].color == emptyColor)//izquierda
                     {
-                        ThirdRow[index - 1].GetComponent<SpriteRenderer>().color = activeColor;
-                        ThirdRow[index - 1].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        ThirdRow[index - 1].color = activeColor;
+                        ThirdRow[index - 1].sprite = currentSprite;
 
-                        ThirdRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        ThirdRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        ThirdRow[index].color = emptyColor;
+                        ThirdRow[index].sprite = EmptySprite;
                     }
                 }
                 else if (index == 2)
                 {
                     
-                    if (SecondRow[index].GetComponent<SpriteRenderer>().color == emptyColor) //arriba
+                    if (SecondRow[index].color == emptyColor) //arriba
                     {
-                        SecondRow[index].GetComponent<SpriteRenderer>().color = activeColor;
-                        SecondRow[index].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        SecondRow[index].color = activeColor;
+                        SecondRow[index].sprite = currentSprite;
 
-                        ThirdRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        ThirdRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        ThirdRow[index].color = emptyColor;
+                        ThirdRow[index].sprite = EmptySprite;
                     }
                     else if (ThirdRow[index - 1].GetComponent<SpriteRenderer>().color==emptyColor)//izquierda
                     {
-                        ThirdRow[index - 1].GetComponent<SpriteRenderer>().color = activeColor;
-                        ThirdRow[index - 1].GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        ThirdRow[index - 1].color = activeColor;
+                        ThirdRow[index - 1].sprite = currentSprite;
 
-                        ThirdRow[index].GetComponent<SpriteRenderer>().color = emptyColor;
-                        ThirdRow[index].GetComponent<SpriteRenderer>().sprite = EmptySprite;
+                        ThirdRow[index].color = emptyColor;
+                        ThirdRow[index].sprite = EmptySprite;
                     }
                 }
                 break;
@@ -321,7 +332,7 @@ public class FragmentsController : MonoBehaviour
         }
     }
 
-    private void FindRowAndIndex(GameObject selected)
+    private void FindRowAndIndex(SpriteRenderer selected)
     {
         if (FirstRow.Contains(selected))
         {
@@ -362,6 +373,52 @@ public class FragmentsController : MonoBehaviour
             AllPieces[i].sprite = ResetList[i];
             AllPieces[i].color = activeColor;
         }
-        ThirdRow[2].GetComponent<SpriteRenderer>().color = emptyColor;
+        ThirdRow[2].color = emptyColor;
+    }
+
+
+    SpriteRenderer blank;
+    private void Help(string name)
+    {
+        blank.color = activeColor;
+        blank.sprite = currentSprite;
+
+        switch (name)
+        {
+            case "First":
+                FirstRow[index].color = emptyColor;
+                FirstRow[index].sprite = EmptySprite;
+                break;
+
+            case "Second":
+                SecondRow[index].color = emptyColor;
+                SecondRow[index].sprite = EmptySprite;
+                break;
+
+            case "Third":
+                ThirdRow[index].color = emptyColor;
+                ThirdRow[index].sprite = EmptySprite;
+                break;
+        }
+        helping = false;
+    }
+
+    private SpriteRenderer FindBlanckItem()
+    {
+        for (int i = 0; i < AllPieces.Count; i++)
+        {
+            if (AllPieces[i].color == emptyColor)
+                return AllPieces[i];
+        }
+        return null;
+    }
+    public void ClickHelp()
+    {
+        blank = FindBlanckItem();
+
+        blank.sprite = helpSprite;
+        blank.color = new Color(1, 1, 1, 1);
+
+        helping = true;
     }
 }
