@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     private float _leaveTimer;
     bool _reset;
 
-    public Camera Camera;
+    public Camera Camera => Cameras.GetCameras().CurrentCamera;
     KeyCode Drag = KeyCode.Mouse0;
     KeyCode Interact = KeyCode.Mouse0;
     public GameObject RoomContainer;

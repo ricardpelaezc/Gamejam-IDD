@@ -188,7 +188,7 @@ public class IAState : MonoBehaviour
             Vector3 newPos = new Vector3(Picture.position.x, transform.position.y, Picture.position.z);
             transform.position = Vector3.Lerp(transform.position, newPos, speed * Time.deltaTime);
 
-            if (Vector3.Distance(Picture.position, transform.position) < 0.5f)
+            if (Vector3.Distance(Picture.position, transform.position) < 0.8f)
             {
                 SetWait();
                 StartCoroutine(MakePicture());
@@ -225,7 +225,8 @@ public class IAState : MonoBehaviour
 
     public IEnumerator MakePicture()
     {
-        transform.position = transform.position;
+        SetWait();
+        Cameras.GetCameras().Ortographics();//no quería hacer esto así pero apenas hay time xd
         yield return new WaitForSeconds(1.5f);
         PuzlePanel.GetPuzzlePanel().MakePuzzle();
     }
