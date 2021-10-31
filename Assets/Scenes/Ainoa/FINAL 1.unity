@@ -6033,6 +6033,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4770026166549472927, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.36
+      objectReference: {fileID: 0}
     - target: {fileID: 4770026166606953841, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: PlayerScript
       value: 
@@ -6135,11 +6139,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4770026167313129573, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4770026167313129575, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4770026167313129575, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: InteractableObj
       objectReference: {fileID: 0}
     - target: {fileID: 4770026167370465324, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: m_LocalScale.x
@@ -6465,6 +6473,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5552346699192350952, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5586099700852362835, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -6672,6 +6684,10 @@ PrefabInstance:
     - target: {fileID: 6947831020422786662, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: m_Name
       value: FirstWayPoints
+      objectReference: {fileID: 0}
+    - target: {fileID: 6981278380941629707, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7002930911423405619, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: m_TagString

@@ -71,6 +71,7 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        print("PickIntance: "+PickedInstance);
         if (!_lockControls)
         {
             if (_draggingPickedItem)

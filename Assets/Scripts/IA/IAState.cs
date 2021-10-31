@@ -46,7 +46,7 @@ public class IAState : MonoBehaviour
         IAUpdate();
 
         timerToNextWayPoint += Time.deltaTime;
-        print("EStado woman: "+WomanStates);
+        //print("EStado woman: "+WomanStates);
     }
 
 
