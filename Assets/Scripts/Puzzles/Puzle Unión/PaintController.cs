@@ -14,6 +14,7 @@ public class PaintController : MonoBehaviour
 
     public void Update()
     {
+        
         if (Input.GetMouseButtonDown(0))
             PaintSelected();
 
@@ -23,6 +24,17 @@ public class PaintController : MonoBehaviour
             Player.GetPlayer().UnlockRoom();
 
             m_PuzzlePanel.ResetPanel();
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            //Cameras.GetCameras().Perspective();
+            m_PuzzlePanel.currentPuzzle++;
+            m_PuzzlePanel.ResetPanel();
+
+            IAState.GetIA().SetDoor();
+            gameObject.transform.parent.gameObject.SetActive(false);
+            Player.GetPlayer().UnlockRoom();
         }
     }
 

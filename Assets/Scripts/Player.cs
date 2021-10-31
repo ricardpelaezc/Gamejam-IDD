@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,6 +56,10 @@ public class Player : MonoBehaviour
     }
 
     static public Player GetPlayer() => _Player;
+    internal int GetRoomID()
+    {
+        return _unlockedRooms;
+    }
     private void Start()
     {
         for (int i = 0; i < Rooms.Count; i++)
@@ -66,6 +71,7 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        print("PickIntance: "+PickedInstance);
         if (!_lockControls)
         {
             if (_draggingPickedItem)
@@ -170,7 +176,7 @@ public class Player : MonoBehaviour
                             Interactable interactable = hit.transform.GetComponent<Interactable>();
                             interactable.Interact();
 
-                            if (hit.collider.tag != "InteractableObj" && !hit.collider.GetComponent<Water>())
+                            if (hit.collider.tag != "InteractableObj" && !hit.collider.GetComponent<Water>() && !hit.collider.GetComponent<OneClick>() && !hit.collider.GetComponent<Lock>())
                             {
                                 hudAnim.SetBool("Show", true);
                             }
@@ -265,7 +271,7 @@ public class Player : MonoBehaviour
         {
             if (_rotationAmount > AngleLimit(_roomID))
             {
-                print(_roomID);
+                //print(_roomID);
                 _initialSkyboxColor = SkyboxColors[_roomID - 1];
                 _roomID++;
                 _finalSkyboxColor = SkyboxColors[_roomID - 1];
@@ -320,6 +326,7 @@ public class Player : MonoBehaviour
             _lockControls = false;
         }
     }
+
     public void UnlockRoom()
     {
         _lockControls = true;
