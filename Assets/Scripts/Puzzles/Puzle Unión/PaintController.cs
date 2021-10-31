@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,22 +21,28 @@ public class PaintController : MonoBehaviour
 
         if (ComproveAllPiecesConnected())
         {
-            //Cameras.GetCameras().Ortographics();
-            Player.GetPlayer().UnlockRoom();
+            
 
-            m_PuzzlePanel.ResetPanel();
+            StartCoroutine(Solved());
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            //Cameras.GetCameras().Perspective();
-            m_PuzzlePanel.currentPuzzle++;
-            m_PuzzlePanel.ResetPanel();
+    public IEnumerator Solved()
+    {
 
-            IAState.GetIA().SetDoor();
-            gameObject.transform.parent.gameObject.SetActive(false);
-            Player.GetPlayer().UnlockRoom();
-        }
+        Cameras.GetCameras().CurrentCamera.GetComponent<Animator>().SetBool("End", true);
+        Cameras.GetCameras().CurrentCamera.GetComponent<Animator>().SetBool("Start", false);
+        yield return new WaitForSeconds(2f);
+
+        Cameras.GetCameras().Perspective();
+
+        yield return new WaitForSeconds(0.5f);
+        Player.GetPlayer().UnlockRoom();
+        m_PuzzlePanel.ResetPanel();
+        yield return new WaitForSeconds(1f);
+        m_PuzzlePanel.currentPuzzle++;
+        IAState.GetIA().SetDoor();
+        //gameObject.transform.parent.gameObject.SetActive(false);
     }
 
     public bool ComproveAllPiecesConnected()
