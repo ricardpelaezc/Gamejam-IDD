@@ -93,8 +93,8 @@ public class FragmentsController : MonoBehaviour
 
         m_PuzzlePanel.ResetPanel();
         IAState.GetIA().SetDoor();
-        gameObject.transform.parent.gameObject.SetActive(false);
         Player.GetPlayer().UnlockRoom();
+        gameObject.transform.parent.gameObject.SetActive(false);
     }
     private bool CheckCombination()
     {
@@ -424,11 +424,15 @@ public class FragmentsController : MonoBehaviour
     }
     public void ClickHelp()
     {
-        blank = FindBlanckItem();
+        if (!helping)
+        {
+            blank = FindBlanckItem();
 
-        blank.sprite = helpSprite;
-        blank.color = new Color(1, 1, 1, 1);
+            blank.sprite = helpSprite;
+            blank.color = new Color(1, 1, 1, 1);
 
-        helping = true;
+            helping = true;
+        }
+
     }
 }

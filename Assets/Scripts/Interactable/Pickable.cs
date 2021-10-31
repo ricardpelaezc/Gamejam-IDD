@@ -15,6 +15,9 @@ public class Pickable : Interactable
     public float PickTime;
     public GameObject TargetGameObject;
 
+    public bool applyrotation = true;
+    public Quaternion rot;
+
     public override void Interact()
     {
         if (!PlayerScript.Picked)
@@ -46,7 +49,14 @@ public class Pickable : Interactable
             Vector3 movement = Vector3.Lerp(_intialPosition, _finalPosition, _pickTimer / PickTime);
             Quaternion rotation = Quaternion.Lerp(_intialRotation, _finalRotation, _pickTimer / PickTime);
             _instance.transform.position = movement;
-            _instance.transform.rotation = rotation;
+
+            if(applyrotation)
+                _instance.transform.rotation = rotation;
+            else
+            {
+                _instance.transform.rotation = rot;
+            }
+
             if (_pickTimer > PickTime)
             {
                 _instance.transform.position = _finalPosition;

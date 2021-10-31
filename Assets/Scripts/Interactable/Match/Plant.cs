@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,12 @@ public class Plant : Animated
         _actionsAfterAnimations = new List<Action> { null };
 
         _animator.SetTrigger("Match");
+        StartCoroutine(Grow());
+    }
 
+    private IEnumerator Grow()
+    {
+        yield return new WaitForSeconds(3.5f);
         Player.GetPlayer().UnlockRoom();
 
         IAState.GetIA().SetDoor();
