@@ -29,11 +29,17 @@ public class TextController : MonoBehaviour
     void Start()
     {
         startZoom = c.fieldOfView;
-        StartText();
     }
-
     void Update()
     {
+        if (Input.GetMouseButtonUp(0) && writting)
+        {
+            StopAllCoroutines();
+            text.text = messages[currentIndex-1];
+            writting = false;
+            StartCoroutine(StopWritting());
+        }
+
         if (startText) if (init)
             {
                 Init();
@@ -42,7 +48,7 @@ public class TextController : MonoBehaviour
 
         if (waitForInput)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonUp(0))
             {
                 if (!messagesEnd[currentIndex - 1])
                 {
@@ -73,9 +79,10 @@ public class TextController : MonoBehaviour
         startText = true;
         init = true;
     }
-
+    private bool writting = false;
     private IEnumerator WriteText(string message)
     {
+        writting = true;
         for (int i = 0; i < message.Length; i++)
         {
             text.text += message[i];
@@ -83,7 +90,17 @@ public class TextController : MonoBehaviour
         }
         leftclick.SetActive(true);
         waitForInput = true;
+        writting = false;
     }
+
+    private IEnumerator StopWritting()
+    {
+        yield return new WaitForSeconds(0.1f);
+        leftclick.SetActive(true);
+        waitForInput = true;
+        writting = false;
+    }
+
     private void Init()
     {
         init = false;

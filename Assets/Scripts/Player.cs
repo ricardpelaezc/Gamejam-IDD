@@ -334,6 +334,12 @@ public class Player : MonoBehaviour
         _unlockAnimationInitialRotationY = RoomContainer.transform.rotation.eulerAngles.y;
         _unlockAnimationTimer = 0;
         _unlockedRooms++;
+        StartCoroutine(Txt());
+    }
+    private IEnumerator Txt()
+    {
+        yield return new WaitForSeconds(2f);
+        TextController.StartText();
     }
     private float AngleLimit(int id)
     {
