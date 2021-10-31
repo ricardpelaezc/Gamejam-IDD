@@ -27,7 +27,7 @@ public class FragmentsController : MonoBehaviour
     private Color emptyColor = new Color(0, 0, 0, 0);
     private Color activeColor = new Color(1, 1, 1, 1);
 
-    Camera m_Camera => Cameras.GetCameras().OrtographicCamera;
+    Camera m_Camera => Cameras.GetCameras().CurrentCamera;
     public PuzlePanel m_PuzzlePanel;
 
     private bool helping = false;

@@ -3116,7 +3116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435743f1887284849bec7cbb265739ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerScript: {fileID: 0}
+  PlayerScript: {fileID: 2020520708}
   InventoryPoint: {fileID: 1033408085}
   PickTime: 0.5
   TargetGameObject: {fileID: 554349032}
@@ -11185,7 +11185,7 @@ PrefabInstance:
     - target: {fileID: 562471854, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: PlayerScript
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2020520708}
     - target: {fileID: 562471854, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: InventoryPoint
       value: 
@@ -11845,7 +11845,7 @@ PrefabInstance:
     - target: {fileID: 4770026166606953841, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: PlayerScript
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2020520708}
     - target: {fileID: 4770026166606953841, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: InventoryPoint
       value: 
@@ -11869,7 +11869,7 @@ PrefabInstance:
     - target: {fileID: 4770026166875736414, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: PlayerScript
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2020520708}
     - target: {fileID: 4770026166875736414, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: InventoryPoint
       value: 
@@ -12073,7 +12073,7 @@ PrefabInstance:
     - target: {fileID: 4770026168145753629, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: PlayerScript
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2020520708}
     - target: {fileID: 4770026168145753629, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: InventoryPoint
       value: 
@@ -12773,7 +12773,7 @@ PrefabInstance:
     - target: {fileID: 8599967394547815499, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: PlayerScript
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2020520708}
     - target: {fileID: 8599967394547815499, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: InventoryPoint
       value: 
@@ -12933,7 +12933,7 @@ PrefabInstance:
     - target: {fileID: 9059267083425821416, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: PlayerScript
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2020520708}
     - target: {fileID: 9059267083425821416, guid: c0c93bd106d5c8748ba43a70bc8e6bca, type: 3}
       propertyPath: InventoryPoint
       value: 
@@ -13281,6 +13281,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969257634}
   m_CullTransparentMesh: 1
+--- !u!114 &2020520708 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8415845283719418905, guid: 22194503ffccdb14c814837339db661d, type: 3}
+  m_PrefabInstance: {fileID: 1161776744}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41463ab6b24b3674ca70728b490303dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2102040644
 GameObject:
   m_ObjectHideFlags: 0
