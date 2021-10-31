@@ -270,7 +270,7 @@ public class Player : MonoBehaviour
         {
             if (_rotationAmount > AngleLimit(_roomID))
             {
-                print(_roomID);
+                //print(_roomID);
                 _initialSkyboxColor = SkyboxColors[_roomID - 1];
                 _roomID++;
                 _finalSkyboxColor = SkyboxColors[_roomID - 1];

@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Cameras : MonoBehaviour
 {
-    public Animator Camera;
+    public Animator CameraAnim;
     public Camera OrtographicCamera;
 
+    public GameObject PickColliders;
     static Cameras m_Cameras;
 
 
@@ -18,11 +19,13 @@ public class Cameras : MonoBehaviour
     static public Cameras GetCameras() => m_Cameras;
     public void Perspective()
     {
-
+       // Camera.main.orthographic = false;
+        PickColliders.SetActive(true);
     }
 
     public void Ortographics()
     {
-
+        PickColliders.SetActive(false);
+        //Camera.main.orthographic = true;
     }
 }

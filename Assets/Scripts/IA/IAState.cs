@@ -33,9 +33,11 @@ public class IAState : MonoBehaviour
 
     private Animator _Animator;
 
-    private int currentDoor=0;
+    private int currentDoor=-1;
     public List<Animator> Doors;
     public List<Transform> WayPointsDoor;
+
+    public Animator Interrogante;
     int currentRoomID => Player.GetPlayer().GetRoomID() - 1;
 
     [SerializeField] private float speed = 0.7f;
@@ -44,6 +46,7 @@ public class IAState : MonoBehaviour
         IAUpdate();
 
         timerToNextWayPoint += Time.deltaTime;
+        print("EStado woman: "+WomanStates);
     }
 
 
@@ -78,7 +81,7 @@ public class IAState : MonoBehaviour
                 WalkUpdate();
                 break;
             case States.EVENT:
-                UpdateEvent();
+                StartCoroutine(UpdateEvent());
                 break;
             case States.WAIT:
                 WaitUpdate();
@@ -89,7 +92,6 @@ public class IAState : MonoBehaviour
             default:
                 break;
         }
-        print(timerToNextWayPoint);
     }
 
     public void SetIdle()
@@ -119,6 +121,7 @@ public class IAState : MonoBehaviour
     public void SetDoor()
     {
         WomanStates = States.DOOR;
+        currentDoor++;
     }
     private IEnumerator IdleUpdate()
     {
@@ -147,8 +150,14 @@ public class IAState : MonoBehaviour
 
     }
 
-    public void UpdateEvent()
+    public IEnumerator UpdateEvent()
     {
+
+        _Animator.SetTrigger("Idle");
+        Interrogante.SetBool("Dude", true);
+        yield return new WaitForSeconds(1f);
+        _Animator.SetTrigger("Walk");
+
         if (PuzlePanel.GetPuzzlePanel().currentPuzzle == 0)
         {
             Vector3 dir = Hung.position - transform.position;
@@ -158,13 +167,15 @@ public class IAState : MonoBehaviour
             Vector3 newPos = new Vector3(Hung.position.x, transform.position.y, Hung.position.z);
             transform.position = Vector3.Lerp(transform.position, newPos, speed * Time.deltaTime);
 
-            print("DISTANCIA: "+Vector3.Distance(Hung.position, transform.position));
+           // print("DISTANCIA: "+Vector3.Distance(Hung.position, transform.position));
             if (Vector3.Distance(Hung.position, transform.position) < 0.9f)
             {
                 SetWait();
                 StartCoroutine(MakeHung());
+                Interrogante.SetBool("Dude", false);
             }
 
+            
 
 
         }
@@ -177,7 +188,15 @@ public class IAState : MonoBehaviour
             Vector3 newPos = new Vector3(Picture.position.x, transform.position.y, Picture.position.z);
             transform.position = Vector3.Lerp(transform.position, newPos, speed * Time.deltaTime);
 
-            // StartCoroutine(MakePicture());
+            if (Vector3.Distance(Picture.position, transform.position) < 0.9f)
+            {
+                SetWait();
+                StartCoroutine(MakePicture());
+                Interrogante.SetBool("Dude", false);
+            }
+
+            
+            
         }
 
     }
@@ -217,6 +236,8 @@ public class IAState : MonoBehaviour
         _Animator.SetTrigger("Walk");
         Vector3 dir = WayPointsDoor[currentDoor].position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(dir);
+        rotation.z = 0;
+        rotation.x = 0;
         transform.rotation = rotation;
 
         Vector3 newPos = new Vector3(WayPointsDoor[currentDoor].position.x, transform.position.y, WayPointsDoor[currentDoor].position.z);
@@ -228,5 +249,7 @@ public class IAState : MonoBehaviour
             SetIdle();
             IndexWaypoint = 0;
         }
+
+
     }
 }
