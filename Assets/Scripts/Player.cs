@@ -175,7 +175,7 @@ public class Player : MonoBehaviour
                             Interactable interactable = hit.transform.GetComponent<Interactable>();
                             interactable.Interact();
 
-                            if (hit.collider.tag != "InteractableObj" && !hit.collider.GetComponent<Water>())
+                            if (hit.collider.tag != "InteractableObj" && !hit.collider.GetComponent<Water>() && !hit.collider.GetComponent<OneClick>() && !hit.collider.GetComponent<Lock>())
                             {
                                 hudAnim.SetBool("Show", true);
                             }

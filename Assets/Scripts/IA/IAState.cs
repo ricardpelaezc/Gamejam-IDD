@@ -188,7 +188,7 @@ public class IAState : MonoBehaviour
             Vector3 newPos = new Vector3(Picture.position.x, transform.position.y, Picture.position.z);
             transform.position = Vector3.Lerp(transform.position, newPos, speed * Time.deltaTime);
 
-            if (Vector3.Distance(Picture.position, transform.position) < 0.9f)
+            if (Vector3.Distance(Picture.position, transform.position) < 0.5f)
             {
                 SetWait();
                 StartCoroutine(MakePicture());
