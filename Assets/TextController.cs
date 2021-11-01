@@ -70,7 +70,6 @@ public class TextController : MonoBehaviour
         {
             c.fieldOfView -= Time.deltaTime * speedZoom;
         }
-
     }
 
     public static void StartText()
