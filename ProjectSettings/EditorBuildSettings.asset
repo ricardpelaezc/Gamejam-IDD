@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 7c43f74a27382a243831b0a7b0e725b9
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/Ainoa/FINAL 2.unity
+    guid: 5be28916c3dce8e4083ee41975b6c220
   - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: 9701506a2dfadc94886bcc03649b200e
