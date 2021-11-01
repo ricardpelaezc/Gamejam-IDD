@@ -2193,6 +2193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb78aef009cf7f647bd37022d54580de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  a: {fileID: 0}
 --- !u!95 &554349035
 Animator:
   serializedVersion: 3
@@ -2410,29 +2411,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1230612579}
     m_Modifications:
-    - target: {fileID: 5996454934763325975, guid: d1a042ed8ec94804fa76222eef038307, type: 3}
+    - target: {fileID: 326964068688541209, guid: d1a042ed8ec94804fa76222eef038307, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1230612580}
     - target: {fileID: 5996454934763325975, guid: d1a042ed8ec94804fa76222eef038307, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowPauseMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 5996454936162058743, guid: d1a042ed8ec94804fa76222eef038307, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1230612580}
-    - target: {fileID: 5996454936162058743, guid: d1a042ed8ec94804fa76222eef038307, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Quit
-      objectReference: {fileID: 0}
     - target: {fileID: 5996454936441487168, guid: d1a042ed8ec94804fa76222eef038307, type: 3}
       propertyPath: m_Name
       value: Pause Menu
-      objectReference: {fileID: 0}
-    - target: {fileID: 5996454936441487168, guid: d1a042ed8ec94804fa76222eef038307, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5996454936441487171, guid: d1a042ed8ec94804fa76222eef038307, type: 3}
       propertyPath: m_Pivot.x
@@ -2518,16 +2507,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5996454936441487172, guid: d1a042ed8ec94804fa76222eef038307, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5996454936441487173, guid: d1a042ed8ec94804fa76222eef038307, type: 3}
-      propertyPath: m_Alpha
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5996454936441487170, guid: d1a042ed8ec94804fa76222eef038307, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1a042ed8ec94804fa76222eef038307, type: 3}
 --- !u!1 &700599456
 GameObject:
@@ -10505,6 +10485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Door: {fileID: 3640557258707504298}
+  a: {fileID: 0}
 --- !u!95 &1642327017
 Animator:
   serializedVersion: 3
@@ -13717,6 +13698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb78aef009cf7f647bd37022d54580de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  a: {fileID: 0}
 --- !u!136 &1460898031472486864
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -14236,6 +14218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a96a90c4210b88b468143349f93a4edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  a: {fileID: 0}
 --- !u!65 &3311982678248473553
 BoxCollider:
   m_ObjectHideFlags: 0

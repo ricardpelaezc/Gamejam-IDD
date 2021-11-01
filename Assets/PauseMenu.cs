@@ -10,10 +10,20 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !TextController.startText)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ShowPauseMenu(_show);
+            if (Pause)
+            {
+                ShowPauseMenu(false);
+            }
+            else
+            {
+                ShowPauseMenu(_show);
+            }
+
         }
+
+
     }
 
     public void ShowPauseMenu(bool show)
