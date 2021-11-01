@@ -10,6 +10,10 @@ public class PaintController : MonoBehaviour
     public LayerMask m_LayerMask;
 
     public PuzlePanel m_PuzzlePanel;
+    public GameObject Paint; //hijo
+    public GameObject PicturePaint; //la foto
+
+    bool once = false;
 
     Camera m_Camera => Cameras.GetCameras().OrtographicCamera;
 
@@ -19,28 +23,31 @@ public class PaintController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
             PaintSelected();
 
-        if (ComproveAllPiecesConnected())
+        if (ComproveAllPiecesConnected() && !once)
         {
-            
-
+            once = true;
             StartCoroutine(Solved());
         }
     }
 
     public IEnumerator Solved()
     {
-
-        Cameras.GetCameras().CurrentCamera.GetComponent<Animator>().SetBool("End", true);
-        Cameras.GetCameras().CurrentCamera.GetComponent<Animator>().SetBool("Start", false);
         yield return new WaitForSeconds(2f);
 
+        PicturePaint.SetActive(true);
+        Cameras.GetCameras().OrtographicCamera.GetComponent<Animator>().SetBool("Start", false);
+        Cameras.GetCameras().OrtographicCamera.GetComponent<Animator>().SetBool("End", true);
+        m_PuzzlePanel.ResetPanel();
         Cameras.GetCameras().Perspective();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
+        
+        
         Player.GetPlayer().UnlockRoom();
-        m_PuzzlePanel.ResetPanel();
-        yield return new WaitForSeconds(1f);
-        m_PuzzlePanel.currentPuzzle++;
+       // m_PuzzlePanel.currentPuzzle++;
+
+        yield return new WaitForSeconds(4f);
+        gameObject.SetActive(false);
         IAState.GetIA().SetDoor();
         //gameObject.transform.parent.gameObject.SetActive(false);
     }

@@ -12,7 +12,5 @@ public class Waypoints : MonoBehaviour
             IAState.GetIA().IndexWaypoint++;
             IAState.GetIA().timerToNextWayPoint = 0;
         }
-        
-        
     }
 }

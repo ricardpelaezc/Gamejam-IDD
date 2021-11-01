@@ -155,7 +155,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                if (Input.GetKey(Drag))
+                if (Input.GetKey(Drag) && !PuzlePanel.GetPuzzlePanel().PuzzleActive)
                 {
                     _roomRotationalSpeed -= Input.GetAxis("Mouse X") * _roomRotationalAcceleration * Time.deltaTime;
                     _dragging = true;

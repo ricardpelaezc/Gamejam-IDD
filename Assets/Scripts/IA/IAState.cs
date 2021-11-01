@@ -12,6 +12,7 @@ public class IAState : MonoBehaviour
         EVENT,
         WAIT,
         DOOR,
+        //PLANT,
     }
 
     public States WomanStates;
@@ -24,6 +25,7 @@ public class IAState : MonoBehaviour
 
     public Transform Hung;
     public Transform Picture;
+    public Transform Flower;
 
 
     static IAState Woman;
@@ -89,6 +91,9 @@ public class IAState : MonoBehaviour
             case States.DOOR:
                 OpenDoor();
                 break;
+            //case States.PLANT:
+            //    StartCoroutine(LookFlower());
+            //    break;
             default:
                 break;
         }
@@ -97,25 +102,21 @@ public class IAState : MonoBehaviour
     public void SetIdle()
     {
         WomanStates = States.IDLE;
-        _Animator.SetTrigger("Idle");
     }
 
     private void SetWalk()
     {
         WomanStates = States.WALK;
-        _Animator.SetTrigger("Walk");
     }
 
     public void SetEvent()
     {
         WomanStates = States.EVENT;
-        _Animator.SetTrigger("Walk");
     }
 
     public void SetWait()
     {
         WomanStates = States.WAIT;
-        _Animator.SetTrigger("Idle");
     }
 
     public void SetDoor()
@@ -123,6 +124,11 @@ public class IAState : MonoBehaviour
         WomanStates = States.DOOR;
         currentDoor++;
     }
+
+    //public void SetPlant()
+    //{
+    //    WomanStates = States.PLANT;
+    //}
     private IEnumerator IdleUpdate()
     {
         yield return new WaitForSeconds(2f);
@@ -145,7 +151,9 @@ public class IAState : MonoBehaviour
             //movement
             Vector3 newPos = new Vector3(RoomWaypoints[currentRoomID][IndexWaypoint].position.x, transform.position.y, RoomWaypoints[currentRoomID][IndexWaypoint].position.z);
             transform.position = Vector3.Lerp(transform.position, newPos, speed * Time.deltaTime);
-        }else
+           
+        }
+        else 
             _Animator.SetTrigger("Idle");
 
     }
@@ -174,10 +182,6 @@ public class IAState : MonoBehaviour
                 StartCoroutine(MakeHung());
                 Interrogante.SetBool("Dude", false);
             }
-
-            
-
-
         }
         else if (PuzlePanel.GetPuzzlePanel().currentPuzzle == 1)
         {
@@ -194,11 +198,7 @@ public class IAState : MonoBehaviour
                 StartCoroutine(MakePicture());
                 Interrogante.SetBool("Dude", false);
             }
-
-            
-            
         }
-
     }
 
     private void WaitUpdate()
@@ -231,6 +231,16 @@ public class IAState : MonoBehaviour
         PuzlePanel.GetPuzzlePanel().MakePuzzle();
     }
 
+    //public IEnumerator LookFlower()
+    //{
+
+        
+    //    Vector3 dir = Flower.position - transform.position;
+    //    Quaternion rotation = Quaternion.LookRotation(dir);
+    //    transform.rotation = rotation;
+    //    _Animator.SetTrigger("Idle");
+        
+    //}
 
     public void OpenDoor()
     {

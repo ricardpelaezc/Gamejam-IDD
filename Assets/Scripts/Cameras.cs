@@ -45,7 +45,7 @@ public class Cameras : MonoBehaviour
 
     private IEnumerator OrtographicsEnum()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         CurrentCamera = OrtographicCamera;
         PerspectiveCamera.gameObject.SetActive(false);
         OrtographicCamera.gameObject.SetActive(true);

@@ -7,6 +7,9 @@ public class PuzlePanel : MonoBehaviour
     public Button Button;
     public GameObject PuzzleSlide;
     public GameObject PuzzlePaint;
+    public GameObject PuzzlePaintParent;
+
+    public bool PuzzleActive;
 
     private Animator puzzleSlideAnim;
     private Animator puzzlePaintAnim;
@@ -17,6 +20,8 @@ public class PuzlePanel : MonoBehaviour
     // public Player p;
 
     static PuzlePanel PuzzlePanel;
+
+    public bool GetPuzzleActive() => PuzzleActive;
     private void Awake()
     {
         PuzzlePanel = this;
@@ -30,6 +35,7 @@ public class PuzlePanel : MonoBehaviour
     }
     public void ResetPanel()
     {
+        PuzzleActive = false;
         PuzzleSlide.gameObject.SetActive(false);
         PuzzlePaint.gameObject.SetActive(false);
         Button.gameObject.SetActive(false);
@@ -40,14 +46,20 @@ public class PuzlePanel : MonoBehaviour
         Player.GetPlayer().RemoveInventory();
         if (currentPuzzle == 0)
         {
+            PuzzleActive = true;
             PuzzleSlide.gameObject.SetActive(true);
             Button.gameObject.SetActive(true);
             puzzleSlideAnim.SetBool("Show", true);
         }
-            
+
 
         if (currentPuzzle == 1)
+        {
+            PuzzleActive = true;
+            PuzzlePaintParent.gameObject.SetActive(true);
             PuzzlePaint.gameObject.SetActive(true);
+        }
+             //tr   SetActive(true);
         //if(currentPuzzle == 2)
         //    Puzzle
     }
