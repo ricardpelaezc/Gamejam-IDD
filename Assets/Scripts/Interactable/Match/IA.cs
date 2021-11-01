@@ -1,18 +1,20 @@
 using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class IA : Animated
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject Zoom;
+    public override void Match()
     {
-        
+        StartCoroutine(ChangeScene());
     }
 
-    // Update is called once per frame
-    void Update()
+    public IEnumerator ChangeScene()
     {
-        
+        yield return new WaitForSeconds(0.3f);
+        Cameras.GetCameras().PerspectiveCamera.GetComponent<Animator>().SetBool("Final", true);
+        yield return new WaitForSeconds(4f);
+        SceneManager.LoadScene(2);
     }
 }

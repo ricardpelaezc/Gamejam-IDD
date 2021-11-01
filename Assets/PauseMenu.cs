@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    CanvasGroup _canvasGroup;
+    public CanvasGroup _canvasGroup;
+    public static bool Pause = false;
     private bool _show;
-
-    private void Start()
-    {
-        _canvasGroup = GetComponent<CanvasGroup>();
-    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !TextController.startText)
         {
             ShowPauseMenu(_show);
         }
@@ -24,6 +20,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (show)
         {
+            Pause = false;
             Time.timeScale = 0;
             _canvasGroup.alpha = 1;
             _canvasGroup.interactable = true;
@@ -32,6 +29,7 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
+            Pause = true;
             Time.timeScale = 1;
             _canvasGroup.alpha = 0;
             _canvasGroup.interactable = false;

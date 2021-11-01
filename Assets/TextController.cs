@@ -22,10 +22,12 @@ public class TextController : MonoBehaviour
     private float startZoom;
 
     private int currentIndex = 0;
-    private static bool startText = false;
+    public static bool startText = false;
     private static bool init = false;
 
     private bool waitForInput = false;
+
+    
     void Start()
     {
         startZoom = c.fieldOfView;
@@ -70,7 +72,6 @@ public class TextController : MonoBehaviour
         {
             c.fieldOfView -= Time.deltaTime * speedZoom;
         }
-
     }
 
     public static void StartText()
