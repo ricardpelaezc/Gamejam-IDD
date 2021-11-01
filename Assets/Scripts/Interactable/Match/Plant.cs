@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Plant : Animated
 {
-    //public PuzlePanel Puzle;
+    //public PuzlePanel Puzle;    
+    public Animator a;
     public override void Match()
     {
         _animationsNames = new List<string> { "Match" };
@@ -14,6 +15,7 @@ public class Plant : Animated
 
         _animator.SetTrigger("Match");
         StartCoroutine(Grow());
+        a.SetBool("Show", false);
     }
 
     private IEnumerator Grow()

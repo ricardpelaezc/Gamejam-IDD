@@ -49,10 +49,12 @@ public class Player : MonoBehaviour
     static Player _Player;
 
     [SerializeField] private Animator hudAnim;
+    private AudioSource sfx;
 
     private void Awake()
     {
         _Player = this;
+        sfx = GetComponent<AudioSource>();
     }
 
     static public Player GetPlayer() => _Player;
@@ -329,12 +331,17 @@ public class Player : MonoBehaviour
 
     public void UnlockRoom()
     {
+        if (_unlockedRooms > 0)
+            sfx.Play();
+         
         _lockControls = true;
         _unlockAnimation = true;
         _unlockAnimationInitialRotationY = RoomContainer.transform.rotation.eulerAngles.y;
         _unlockAnimationTimer = 0;
         _unlockedRooms++;
         StartCoroutine(Txt());
+
+
     }
     private IEnumerator Txt()
     {
