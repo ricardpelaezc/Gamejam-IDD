@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class PauseMenu : MonoBehaviour
         {
             if (Pause)
             {
-                ShowPauseMenu(false);
+                ShowPauseMenu(true);
             }
             else
             {
@@ -50,5 +51,9 @@ public class PauseMenu : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+    public void StartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 }

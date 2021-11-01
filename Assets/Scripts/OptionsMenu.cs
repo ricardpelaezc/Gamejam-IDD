@@ -18,35 +18,33 @@ public class OptionsMenu : MonoBehaviour
     public Slider MusicVolume;
     public Slider SFXVolume;
 
-    public Text MasterLabel;
-    public Text MusicLabel;
-    public Text SFXLabel;
-    public Text ResolutionLabel;
     // public AudioSource sfxSound;
-
-    public Resolutions[] resolutions;
 
 
     //----
-
-    [System.Serializable]
-    public struct Resolutions
+    private CanvasGroup cg;
+    public void Show()
     {
-        public int Horizontal, Vertical;
+        cg.alpha = 1;
+        cg.interactable = true;
+        cg.blocksRaycasts = true;
+    }
+    public void Hide()
+    {
+        cg.alpha = 0;
+        cg.interactable = false;
+        cg.blocksRaycasts = false;
     }
     //------
     private void Start()
     {
+        cg = GetComponent<CanvasGroup>();
         FullScreen.isOn = Screen.fullScreen;
 
         if (QualitySettings.vSyncCount == 0)
             Vsync.isOn = false;
         else
             Vsync.isOn = true;
-
-        MasterLabel.text = (MasterVolume.value + 80).ToString();
-        MusicLabel.text = (MusicVolume.value + 80).ToString();
-        SFXLabel.text = (SFXVolume.value + 80).ToString();
     }
 
     public void ApplyGraphics()
@@ -59,46 +57,37 @@ public class OptionsMenu : MonoBehaviour
         else
             QualitySettings.vSyncCount = 0;
 
-        //set resolution && fullscreen
 
-        Screen.SetResolution(resolutions[selectedResolution].Horizontal, resolutions[selectedResolution].Vertical, FullScreen.isOn);
-
-    }
-    private void ResolutionUpdateText()
-    {
-        ResolutionLabel.text = resolutions[selectedResolution].Horizontal + " X " + resolutions[selectedResolution].Vertical;
-    }
-
-    public void IncreaseResolution()
-    {
-        selectedResolution++;
-        if (selectedResolution > resolutions.Length - 1)
-            selectedResolution = resolutions.Length - 1;
-        ResolutionUpdateText();
-    }
-    public void DecresResolution()
-    {
-        selectedResolution--;
-        if (selectedResolution < 0)
-            selectedResolution = 0;
-        ResolutionUpdateText();
+        Screen.fullScreen = FullScreen.isOn;
     }
 
 
     public void SetMasterVolume()
     {
-        MasterLabel.text = (MasterVolume.value + 80).ToString();
-        TheMixer.SetFloat("MasterVol", MasterVolume.value);
+        TheMixer.SetFloat("MasterVol", Mathf.Log10(MasterVolume.value) * 20);
+
+        if (MasterVolume.value<= 0)
+        {
+            TheMixer.SetFloat("MasterVol", -80);
+        }
     }
     public void SetMusicVolume()
     {
-        MusicLabel.text = (MusicVolume.value + 80).ToString();
-        TheMixer.SetFloat("MusicVol", MusicVolume.value);
+        TheMixer.SetFloat("MusicVol", Mathf.Log10(MusicVolume.value) * 20);
+
+        if (MusicVolume.value <= 0)
+        {
+            TheMixer.SetFloat("MusicVol", -80);
+        }
     }
     public void SetSFXVolume()
     {
-        SFXLabel.text = (SFXVolume.value + 80).ToString();
-        TheMixer.SetFloat("SFXVol", SFXVolume.value);
+        TheMixer.SetFloat("SFXVol", Mathf.Log10(SFXVolume.value) * 20);
+
+        if (SFXVolume.value <= 0)
+        {
+            TheMixer.SetFloat("SFXVol", -80);
+        }
     }
 
     //public void PlaySFXLoop()
