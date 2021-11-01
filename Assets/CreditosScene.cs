@@ -7,6 +7,6 @@ public class CreditosScene : MonoBehaviour
 {
     public void BackMenu()
     {
-        SceneManager.LoadScene(0);
+        Application.Quit();
     }
 }

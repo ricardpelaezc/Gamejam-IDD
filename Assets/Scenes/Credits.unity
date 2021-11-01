@@ -180,8 +180,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Artistas\n\nAriel Valera\nOscar Villalobos\n\nProgramadores\n\nMarc Mas\nAinoa
-    Tabares\nRicard Pel\xE1ez\n\nDise\xF1ador\n\nMarc Mas\n\n\n"
+  m_text: "Artistas\n----------------------\nAriel Valera\nOscar Villalobos\n\nProgramadores\n----------------------\nMarc
+    Mas\nAinoa Tabares\nRicard Pel\xE1ez\n\nDise\xF1ador\n----------------------\nMarc
+    Mas\n\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 60d88aa56df522548832152ef765ea22, type: 2}
   m_sharedMaterial: {fileID: 7789344730567403237, guid: 60d88aa56df522548832152ef765ea22, type: 2}
@@ -543,7 +544,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Cr\xE9ditos"
+  m_text: "Cr\xE9ditos\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 60d88aa56df522548832152ef765ea22, type: 2}
   m_sharedMaterial: {fileID: 7789344730567403237, guid: 60d88aa56df522548832152ef765ea22, type: 2}
@@ -570,13 +571,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 90
-  m_fontSizeBase: 90
+  m_fontSize: 151.5
+  m_fontSizeBase: 151.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1036,7 +1037,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Me gustar\xEDa estar contigo otra vez... Pero es mi hora..."
+  m_text: "Me gustar\xEDa estar contigo otra vez... \nPero es mi hora..."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 60d88aa56df522548832152ef765ea22, type: 2}
   m_sharedMaterial: {fileID: 7789344730567403237, guid: 60d88aa56df522548832152ef765ea22, type: 2}
