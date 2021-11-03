@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,10 +11,20 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !TextController.startText)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ShowPauseMenu(_show);
+            if (Pause)
+            {
+                ShowPauseMenu(true);
+            }
+            else
+            {
+                ShowPauseMenu(_show);
+            }
+
         }
+
+
     }
 
     public void ShowPauseMenu(bool show)
@@ -40,5 +51,9 @@ public class PauseMenu : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+    public void StartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 }

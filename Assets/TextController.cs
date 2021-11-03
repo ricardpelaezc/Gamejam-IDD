@@ -34,7 +34,7 @@ public class TextController : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetMouseButtonUp(0) && writting)
+        if (Input.GetMouseButtonUp(0) && writting && Time.timeScale != 0)
         {
             StopAllCoroutines();
             text.text = messages[currentIndex-1];
